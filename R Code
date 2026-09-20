@@ -1,0 +1,63 @@
+# Assignment 4 - Hospital Visit Data: Cleaning, Boxplots, Histograms
+# Author: Adriel
+
+# ---- 1. Data preparation ----
+# Categorical codes: FirstAssess bad=1, good=0; SecondAssess/FinalDecision low=0, high=1
+Frequency     <- c(0.6, 0.3, 0.4, 0.4, 0.2, 0.6, 0.3, 0.4, 0.9, 0.2)
+BloodPressure <- c(103, 87, 32, 42, 59, 109, 78, 205, 135, 176)
+FirstAssess   <- c(1, 1, 1, 1, 0, 0, 0, 0, NA, 1)
+SecondAssess  <- c(0, 0, 1, 1, 0, 0, 1, 1, 1, 1)
+FinalDecision <- c(0, 1, 0, 1, 0, 1, 0, 1, 1, 1)
+
+df_hosp <- data.frame(
+  Frequency, BloodPressure, FirstAssess,
+  SecondAssess, FinalDecision, stringsAsFactors = FALSE
+)
+
+# ---- Inspect and handle NA ----
+summary(df_hosp)
+colSums(is.na(df_hosp))          # 1 NA in FirstAssess (patient 9)
+df_raw  <- df_hosp               # keep original for comparison
+df_hosp <- na.omit(df_hosp)      # listwise deletion -> 9 rows
+nrow(df_raw); nrow(df_hosp)
+
+# Group summaries used in the write-up
+aggregate(BloodPressure ~ FirstAssess,   data = df_hosp, FUN = median)
+aggregate(BloodPressure ~ SecondAssess,  data = df_hosp, FUN = median)
+aggregate(BloodPressure ~ FinalDecision, data = df_hosp, FUN = median)
+aggregate(BloodPressure ~ SecondAssess,  data = df_raw,  FUN = median)  # effect of dropping NA row
+aggregate(BloodPressure ~ FinalDecision, data = df_raw,  FUN = median)
+
+# ---- 2A. Side-by-side boxplots (saved as PNG) ----
+dir.create("plots", showWarnings = FALSE)
+
+png("plots/bp_by_first_assess.png", width = 800, height = 600)
+boxplot(BloodPressure ~ FirstAssess, data = df_hosp,
+        names = c("Good", "Bad"), ylab = "Blood Pressure",
+        main = "BP by First MD Assessment", col = c("lightgreen", "salmon"))
+dev.off()
+
+png("plots/bp_by_second_assess.png", width = 800, height = 600)
+boxplot(BloodPressure ~ SecondAssess, data = df_hosp,
+        names = c("Low", "High"), ylab = "Blood Pressure",
+        main = "BP by Second MD Assessment", col = c("lightblue", "orange"))
+dev.off()
+
+png("plots/bp_by_final_decision.png", width = 800, height = 600)
+boxplot(BloodPressure ~ FinalDecision, data = df_hosp,
+        names = c("Low", "High"), ylab = "Blood Pressure",
+        main = "BP by Final Decision", col = c("lightblue", "orange"))
+dev.off()
+
+# ---- 2B. Histograms (saved as PNG) ----
+png("plots/hist_frequency.png", width = 800, height = 600)
+hist(df_hosp$Frequency, breaks = seq(0, 1, by = 0.1),
+     xlab = "Visit Frequency", main = "Histogram of Visit Frequency",
+     col = "steelblue", border = "white")
+dev.off()
+
+png("plots/hist_blood_pressure.png", width = 800, height = 600)
+hist(df_hosp$BloodPressure, breaks = 8,
+     xlab = "Blood Pressure", main = "Histogram of Blood Pressure",
+     col = "firebrick", border = "white")
+dev.off()
