@@ -31,9 +31,12 @@ boxplot(BloodPressure ~ FinalDecision, data = df_hosp,
 dev.off()
 ```
 
-![BP by First MD Assessment](plots/bp_by_first_assess.png)
-![BP by Second MD Assessment](plots/bp_by_second_assess.png)
-![BP by Final Decision](plots/bp_by_final_decision.png)
+<img width="800" height="600" alt="bp_by_first_assess" src="https://github.com/user-attachments/assets/75f202cd-2ecb-4d94-9649-1dbeb1f108ab" />
+
+<img width="800" height="600" alt="bp_by_second_assess (1)" src="https://github.com/user-attachments/assets/3757378a-1055-4b85-b9b0-e4f3ad3288e5" />
+
+<img width="800" height="600" alt="bp_by_final_decision (1)" src="https://github.com/user-attachments/assets/42a4849a-6ab1-4e0c-affa-d554fa177278" />
+
 
 ## Histograms
 
@@ -44,8 +47,10 @@ hist(df_hosp$BloodPressure, breaks = 8,
      xlab = "Blood Pressure", main = "Histogram of Blood Pressure")
 ```
 
-![Histogram of Visit Frequency](plots/hist_frequency.png)
-![Histogram of Blood Pressure](plots/hist_blood_pressure.png)
+<img width="800" height="600" alt="hist_frequency" src="https://github.com/user-attachments/assets/db3fd0b5-b242-4803-954f-8c4c99809313" />
+
+<img width="800" height="600" alt="hist_blood_pressure" src="https://github.com/user-attachments/assets/fe528fb4-1f6d-43a1-a611-e2a05c25f8e5" />
+
 
 ## Discussion
 
